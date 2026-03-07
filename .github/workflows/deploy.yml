@@ -29,7 +29,7 @@ jobs:
           cd core-banking-service
           mvn clean package -Dmaven.test.skip=true
 
-      # Advanced Features Service build disabled for now
+      # Advanced service disabled for now
       # - name: Build Advanced Features Service
       #   run: |
       #     cd advanced-features-service
@@ -52,24 +52,14 @@ jobs:
             git reset --hard origin/main
             git clean -fd
 
-            echo "Stopping running services..."
+            echo "Stopping running services safely..."
 
-            API_PID=$(pgrep -f api-gateway || true)
-            CORE_PID=$(pgrep -f core-banking-service || true)
+            pgrep -f "java.*api-gateway" | xargs -r kill
+            pgrep -f "java.*core-banking-service" | xargs -r kill
 
-            if [ ! -z "$API_PID" ]; then
-              echo "Stopping API Gateway PID $API_PID"
-              kill $API_PID
-            fi
+            sleep 3
 
-            if [ ! -z "$CORE_PID" ]; then
-              echo "Stopping Core Banking Service PID $CORE_PID"
-              kill $CORE_PID
-            fi
-
-            sleep 2
-
-            echo "Building services on EC2..."
+            echo "Building services..."
 
             cd api-gateway
             mvn clean package -Dmaven.test.skip=true
