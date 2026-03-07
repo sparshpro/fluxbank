@@ -29,12 +29,6 @@ jobs:
           cd core-banking-service
           mvn clean package -Dmaven.test.skip=true
 
-      # Advanced service disabled for now
-      # - name: Build Advanced Features Service
-      #   run: |
-      #     cd advanced-features-service
-      #     mvn clean package -Dmaven.test.skip=true
-
       - name: Deploy to EC2
         uses: appleboy/ssh-action@v1
         with:
@@ -47,19 +41,18 @@ jobs:
             echo "Going to project directory..."
             cd /home/ubuntu/FluxBank
 
-            echo "Syncing with GitHub..."
+            echo "Syncing repository..."
             git fetch origin
             git reset --hard origin/main
             git clean -fd
 
-            echo "Stopping running services safely..."
-
-            pgrep -f "java.*api-gateway" | xargs -r kill
-            pgrep -f "java.*core-banking-service" | xargs -r kill
+            echo "Stopping existing Java services (if running)..."
+            pkill -f "api-gateway.jar" || true
+            pkill -f "core-banking-service.jar" || true
 
             sleep 3
 
-            echo "Building services..."
+            echo "Building services on EC2..."
 
             cd api-gateway
             mvn clean package -Dmaven.test.skip=true
@@ -75,4 +68,4 @@ jobs:
             cd ../core-banking-service
             nohup java -jar target/*.jar > core.log 2>&1 &
 
-            echo "Deployment completed successfully!"
+            echo "Deployment finished successfully!"
