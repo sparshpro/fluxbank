@@ -51,8 +51,19 @@ jobs:
             pkill -f core-banking-service || true
             pkill -f advanced-features-service || true
 
-            echo "Starting API Gateway..."
+            echo "Building services on EC2..."
+
             cd api-gateway
+            mvn clean package -DskipTests
+
+            cd ../core-banking-service
+            mvn clean package -DskipTests
+
+            cd ../advanced-features-service
+            mvn clean package -DskipTests
+
+            echo "Starting API Gateway..."
+            cd ../api-gateway
             nohup java -jar target/*.jar > gateway.log 2>&1 &
 
             echo "Starting Core Banking Service..."
