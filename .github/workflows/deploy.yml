@@ -31,10 +31,10 @@ jobs:
           cd core-banking-service
           mvn clean package -Dmaven.test.skip=true
 
-      - name: Build Advanced Features Service
-        run: |
-          cd advanced-features-service
-          mvn clean package -Dmaven.test.skip=true
+      # - name: Build Advanced Features Service
+      #   run: |
+      #     cd advanced-features-service
+      #     mvn clean package -Dmaven.test.skip=true
 
       - name: Deploy to EC2
         uses: appleboy/ssh-action@v1
@@ -49,7 +49,7 @@ jobs:
             echo "Stopping running services..."
             pkill -f api-gateway || true
             pkill -f core-banking-service || true
-            pkill -f advanced-features-service || true
+           
 
             echo "Building services on EC2..."
 
@@ -59,8 +59,8 @@ jobs:
             cd ../core-banking-service
             mvn clean package -Dmaven.test.skip=true
 
-            cd ../advanced-features-service
-            mvn clean package -Dmaven.test.skip=true
+            # cd ../advanced-features-service
+            # mvn clean package -Dmaven.test.skip=true
 
             echo "Starting API Gateway..."
             cd ../api-gateway
@@ -70,8 +70,8 @@ jobs:
             cd ../core-banking-service
             nohup java -jar target/*.jar > core.log 2>&1 &
 
-            echo "Starting Advanced Features Service..."
-            cd ../advanced-features-service
-            nohup java -jar target/*.jar > advanced.log 2>&1 &
+            # echo "Starting Advanced Features Service..."
+            # cd ../advanced-features-service
+            # nohup java -jar target/*.jar > advanced.log 2>&1 &
 
             echo "Deployment completed!"
