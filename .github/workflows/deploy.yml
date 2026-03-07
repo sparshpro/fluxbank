@@ -7,11 +7,9 @@ on:
 
 jobs:
   build-and-deploy:
-
     runs-on: ubuntu-latest
 
     steps:
-
       - name: Checkout repository
         uses: actions/checkout@v4
 
@@ -43,14 +41,18 @@ jobs:
           username: ubuntu
           key: ${{ secrets.EC2_KEY }}
           script: |
+            set -e
+
+            echo "Going to project directory..."
             cd /home/ubuntu/FluxBank
+
+            echo "Pulling latest code..."
             git pull origin main
 
             echo "Stopping running services..."
             pkill -f api-gateway || true
             pkill -f core-banking-service || true
             pkill -f advanced-features-service || true
-           
 
             echo "Building services on EC2..."
 
@@ -74,6 +76,5 @@ jobs:
             # echo "Starting Advanced Features Service..."
             # cd ../advanced-features-service
             # nohup java -jar target/*.jar > advanced.log 2>&1 &
-            
 
             echo "Deployment completed!"
