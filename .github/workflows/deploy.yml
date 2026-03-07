@@ -24,17 +24,17 @@ jobs:
       - name: Build API Gateway
         run: |
           cd api-gateway
-          mvn clean package -DskipTests
+          mvn clean package -Dmaven.test.skip=true
 
       - name: Build Core Banking Service
         run: |
           cd core-banking-service
-          mvn clean package -DskipTests
+          mvn clean package -Dmaven.test.skip=true
 
       - name: Build Advanced Features Service
         run: |
           cd advanced-features-service
-          mvn clean package -DskipTests
+          mvn clean package -Dmaven.test.skip=true
 
       - name: Deploy to EC2
         uses: appleboy/ssh-action@v1
