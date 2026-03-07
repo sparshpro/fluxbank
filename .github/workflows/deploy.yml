@@ -29,6 +29,7 @@ jobs:
           cd core-banking-service
           mvn clean package -Dmaven.test.skip=true
 
+      # Advanced Features Service build disabled for now
       # - name: Build Advanced Features Service
       #   run: |
       #     cd advanced-features-service
@@ -46,13 +47,27 @@ jobs:
             echo "Going to project directory..."
             cd /home/ubuntu/FluxBank
 
-            echo "Pulling latest code..."
-            git pull origin main
+            echo "Syncing with GitHub..."
+            git fetch origin
+            git reset --hard origin/main
+            git clean -fd
 
             echo "Stopping running services..."
-            pkill -f api-gateway || true
-            pkill -f core-banking-service || true
-            pkill -f advanced-features-service || true
+
+            API_PID=$(pgrep -f api-gateway || true)
+            CORE_PID=$(pgrep -f core-banking-service || true)
+
+            if [ ! -z "$API_PID" ]; then
+              echo "Stopping API Gateway PID $API_PID"
+              kill $API_PID
+            fi
+
+            if [ ! -z "$CORE_PID" ]; then
+              echo "Stopping Core Banking Service PID $CORE_PID"
+              kill $CORE_PID
+            fi
+
+            sleep 2
 
             echo "Building services on EC2..."
 
@@ -62,9 +77,6 @@ jobs:
             cd ../core-banking-service
             mvn clean package -Dmaven.test.skip=true
 
-            # cd ../advanced-features-service
-            # mvn clean package -Dmaven.test.skip=true
-
             echo "Starting API Gateway..."
             cd ../api-gateway
             nohup java -jar target/*.jar > gateway.log 2>&1 &
@@ -73,8 +85,4 @@ jobs:
             cd ../core-banking-service
             nohup java -jar target/*.jar > core.log 2>&1 &
 
-            # echo "Starting Advanced Features Service..."
-            # cd ../advanced-features-service
-            # nohup java -jar target/*.jar > advanced.log 2>&1 &
-
-            echo "Deployment completed!"
+            echo "Deployment completed successfully!"
