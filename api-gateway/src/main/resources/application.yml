@@ -47,7 +47,7 @@ management:
     health:
       show-details: always
       #Show full health details to everyone not just status
-      #Sparsh Chaudhari
+    
 
 
 
