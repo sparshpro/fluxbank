@@ -49,6 +49,7 @@ jobs:
             echo "Stopping running services..."
             pkill -f api-gateway || true
             pkill -f core-banking-service || true
+            pkill -f advanced-features-service || true
            
 
             echo "Building services on EC2..."
