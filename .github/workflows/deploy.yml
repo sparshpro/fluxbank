@@ -11,10 +11,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
+
+      - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Set up Java 21
+      - name: Setup Java 21
         uses: actions/setup-java@v4
         with:
           distribution: temurin
@@ -44,5 +45,22 @@ jobs:
           script: |
             cd /home/ubuntu/FluxBank
             git pull origin main
-            pkill java || true
-            nohup java -jar target/*.jar > app.log 2>&1 &
+
+            echo "Stopping running services..."
+            pkill -f api-gateway || true
+            pkill -f core-banking-service || true
+            pkill -f advanced-features-service || true
+
+            echo "Starting API Gateway..."
+            cd api-gateway
+            nohup java -jar target/*.jar > gateway.log 2>&1 &
+
+            echo "Starting Core Banking Service..."
+            cd ../core-banking-service
+            nohup java -jar target/*.jar > core.log 2>&1 &
+
+            echo "Starting Advanced Features Service..."
+            cd ../advanced-features-service
+            nohup java -jar target/*.jar > advanced.log 2>&1 &
+
+            echo "Deployment completed!"
