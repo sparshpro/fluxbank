@@ -18,8 +18,15 @@ public class SecurityConfig {
                 .csrf(ServerHttpSecurity.CsrfSpec::disable) // csrf -> csrf.disable()
                 // Same as .authorizeHttpRequests() in MVC
                 .authorizeExchange(exchange -> exchange
-                        .pathMatchers("/actuator/**").permitAll()
-                        .pathMatchers("/public/**").permitAll()
+                        .pathMatchers(
+                                "/actuator/**",
+                                "/public/**",
+
+                                "/swagger-ui.html",
+                                "/swagger-ui/**",
+                                "/v3/api-docs/**",
+                                "/v3/api-docs/swagger-config",
+                                "/webjars/**").permitAll()
                         .anyExchange().authenticated()
                 )
                 .oauth2ResourceServer(oauth2 -> oauth2.jwt())

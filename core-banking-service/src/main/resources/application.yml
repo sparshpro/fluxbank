@@ -35,7 +35,11 @@ management:
         include: health,info,metrics
 
 springdoc:
+  api-docs:
+    enabled: true
   swagger-ui:
+    enabled: true
+    path: /swagger-ui.html
     oauth:
       client-id: fluxbank-client
       client-secret: "evO3TKnifIbYzt3Zc2QiBDDZPBIBiOWv"
