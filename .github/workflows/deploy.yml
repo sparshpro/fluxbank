@@ -54,13 +54,13 @@ jobs:
             echo "Building services on EC2..."
 
             cd api-gateway
-            mvn clean package -DskipTests
+            mvn clean package -Dmaven.test.skip=true
 
             cd ../core-banking-service
-            mvn clean package -DskipTests
+            mvn clean package -Dmaven.test.skip=true
 
             cd ../advanced-features-service
-            mvn clean package -DskipTests
+            mvn clean package -Dmaven.test.skip=true
 
             echo "Starting API Gateway..."
             cd ../api-gateway
