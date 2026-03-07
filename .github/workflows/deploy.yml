@@ -73,5 +73,6 @@ jobs:
             # echo "Starting Advanced Features Service..."
             # cd ../advanced-features-service
             # nohup java -jar target/*.jar > advanced.log 2>&1 &
+            
 
             echo "Deployment completed!"
