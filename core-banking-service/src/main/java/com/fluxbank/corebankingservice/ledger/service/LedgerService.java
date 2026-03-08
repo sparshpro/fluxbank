@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -29,5 +30,16 @@ public class LedgerService {
                 .build();
 
         ledgerRepository.save(entry);
+    }
+
+
+    public List<LedgerEntry> getEntriesByAccount(Long accountId){
+
+        return ledgerRepository.findAllByAccount_Id(accountId);
+    }
+
+
+    public List<LedgerEntry> getAllEntries(){
+        return ledgerRepository.findAll();
     }
 }

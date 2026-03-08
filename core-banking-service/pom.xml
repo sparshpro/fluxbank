@@ -91,7 +91,7 @@
             <scope>provided</scope>
         </dependency>
 
-        <!-- DevTools (optional) -->
+        <!-- DevTools  -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
@@ -106,13 +106,39 @@
             <scope>test</scope>
         </dependency>
 
+        <!--   Security Testing -->
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-test</artifactId>
             <scope>test</scope>
         </dependency>
 
+
+
+
+        <!--   Mockito-->
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+        </dependency>
+
+
+        <!-- existing dependencies -->
+
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+        </dependency>
+
     </dependencies>
+
+
+
 
     <dependencyManagement>
         <dependencies>

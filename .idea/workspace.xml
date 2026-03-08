@@ -5,12 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="785d833a-10e9-4a62-9213-7d83256525b9" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/api-gateway/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/api-gateway/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-gateway/src/main/java/com/fluxbank/apigateway/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-gateway/src/main/java/com/fluxbank/apigateway/config/SecurityConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-gateway/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/api-gateway/src/main/resources/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core-banking-service/src/main/java/com/fluxbank/corebankingservice/config/JwtAuthConverter.java" beforeDir="false" afterPath="$PROJECT_DIR$/core-banking-service/src/main/java/com/fluxbank/corebankingservice/config/JwtAuthConverter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core-banking-service/src/main/java/com/fluxbank/corebankingservice/config/OpenApiConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/core-banking-service/src/main/java/com/fluxbank/corebankingservice/config/OpenApiConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core-banking-service/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/core-banking-service/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -85,7 +80,7 @@
       <workItem from="1772614474815" duration="89000" />
       <workItem from="1772614577776" duration="347000" />
       <workItem from="1772614944831" duration="95000" />
-      <workItem from="1772910977409" duration="474000" />
+      <workItem from="1772910977409" duration="1200000" />
     </task>
     <servers />
   </component>

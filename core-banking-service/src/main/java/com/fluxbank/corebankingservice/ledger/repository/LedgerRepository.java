@@ -8,4 +8,6 @@ import java.util.List;
 public interface LedgerRepository extends JpaRepository<LedgerEntry, Long> {
 
     List<LedgerEntry> findByAccountId(Long accountId);
+
+    List<LedgerEntry> findAllByAccount_Id(Long accountId);
 }
