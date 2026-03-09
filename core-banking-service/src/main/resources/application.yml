@@ -42,6 +42,6 @@ springdoc:
     path: /swagger-ui.html
     oauth:
       client-id: fluxbank-client
-      client-secret: "evO3TKnifIbYzt3Zc2QiBDDZPBIBiOWv"
+      client-secret: "Fa2lpYYHuileT63zuBWWt73T49YWZRdU"
       use-basic-authentication-with-access-code-grant: false
 
