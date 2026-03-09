@@ -2,40 +2,44 @@ name: Deploy FluxBank
 
 on:
  push:
-  branches: 
-    - main
-
+  branches:
+   - main
 
 jobs:
-  deploy:
-    runs-on: ubuntu-latest
+ deploy:
+  runs-on: ubuntu-latest
 
-    steps:
-      - name: Deploy to EC2
-        uses: appleboy/ssh-action@v1
-        with:
-          host: ${{ secrets.EC2_HOST }}
-          username: ${{ secrets.EC2_USER }}
-          key: ${{ secrets.EC2_KEY }}
-          script: 
-            set -e
-          
-            echo "Navigating to project directory..."
-            cd /home/ubuntu/fluxbank
-          
-            echo "Syncing with GitHub..."
-            git fetch origin
-            git reset --hard origin/main
-          
-            echo "Building project..."
-	          cd api-gateway
-            mvn clean package -DskipTests
+  steps:
+  - name: Deploy to EC2
+    uses: appleboy/ssh-action@v1
+    with:
+      host: ${{ secrets.EC2_HOST }}
+      username: ${{ secrets.EC2_USER }}
+      key: ${{ secrets.EC2_KEY }}
+      script: 
+        set -e
 
-	          cd ../core-banking-service
-	          mvn clean package -DskipTests
-          
-            echo "Restarting services..."
-            sudo systemctl restart api-gateway
-            sudo systemctl restart core-banking-service
-          
-            echo "Deployment successful!"
+        echo "Navigating to project directory..."
+        cd /home/ubuntu/fluxbank
+
+        echo "Syncing with GitHub..."
+        git fetch origin
+        git reset --hard origin/main
+
+        echo "Building API Gateway..."
+        cd api-gateway
+        mvn clean package -DskipTests
+
+        echo "Building Core Banking Service..."
+        cd ../core-banking-service
+        mvn clean package -DskipTests
+
+        echo "Restarting services..."
+        sudo systemctl restart api-gateway
+        sudo systemctl restart core-banking-service
+
+        echo "Deployment successful!"
+
+
+
+
