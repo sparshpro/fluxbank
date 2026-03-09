@@ -1,0 +1,38 @@
+name: Deploy FluxBank
+
+on:
+push:
+branches:
+- main
+
+jobs:
+deploy:
+runs-on: ubuntu-latest
+
+```
+steps:
+  - name: Deploy to EC2
+    uses: appleboy/ssh-action@v1
+    with:
+      host: ${{ secrets.EC2_HOST }}
+      username: ${{ secrets.EC2_USER }}
+      key: ${{ secrets.EC2_KEY }}
+      script: |
+        set -e
+
+        echo "Navigating to project directory..."
+        cd /home/ubuntu/fluxbank
+
+        echo "Pulling latest code from GitHub..."
+        git fetch origin
+        git reset --hard origin/main
+
+        echo "Building project..."
+        mvn clean package -DskipTests
+
+        echo "Restarting services..."
+        sudo systemctl restart api-gateway
+        sudo systemctl restart core-banking-service
+
+        echo "Deployment successful!"
+```
