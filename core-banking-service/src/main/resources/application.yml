@@ -20,7 +20,7 @@ spring:
     oauth2:
           resourceserver:
             jwt:
-              issuer-uri: "http://43.204.235.106:8085/realms/master"
+              issuer-uri: "http://localhost:8085/realms/master"
 
 info:
   app:
