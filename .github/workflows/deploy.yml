@@ -28,7 +28,11 @@ jobs:
             git reset --hard origin/main
           
             echo "Building project..."
+	    cd api-gateway
             mvn clean package -DskipTests
+
+	    cd ../core-banking-service
+	    mvn clean package -DskipTests
           
             echo "Restarting services..."
             sudo systemctl restart api-gateway
