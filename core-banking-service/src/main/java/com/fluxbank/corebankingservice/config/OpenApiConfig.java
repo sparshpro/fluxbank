@@ -25,7 +25,7 @@ public class OpenApiConfig {
                                         .type(SecurityScheme.Type.OAUTH2)
                                         .flows(new OAuthFlows()
                                                 .password(new OAuthFlow()
-                                                        .tokenUrl("http://localhost:8085/realms/master/protocol/openid-connect/token")
+                                                        .tokenUrl("http://43.204.235.106:8085/realms/master/protocol/openid-connect/token")
                                                 )
                                         )
                         )
