@@ -41,7 +41,7 @@ jobs:
         echo "Restarting services..."
         sudo systemctl restart api-gateway
         sudo systemctl restart core-banking-service
-        sudo systemctl restart advanced-banking-service
+        sudo systemctl restart advanced-features-service
 
         echo "Deployment successful!"
 
