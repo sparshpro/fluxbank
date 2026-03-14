@@ -1,4 +1,5 @@
-package com.fluxbank.corebankingservice.config;
+package com.fluxbank.advancedfeaturesservice.config;
+
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -27,6 +28,8 @@ public class JwtAuthConverter implements Converter<Jwt, AbstractAuthenticationTo
                     .map(role -> new SimpleGrantedAuthority("ROLE_" + role))
                     .collect(Collectors.toList());
         }
+
+
 
         return new JwtAuthenticationToken(jwt, authorities);
     }

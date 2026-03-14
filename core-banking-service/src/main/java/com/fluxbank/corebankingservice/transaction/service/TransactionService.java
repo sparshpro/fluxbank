@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -170,5 +171,78 @@ public class TransactionService {
     /// /////// GENERATE REFERENCE //////////
     private String generateReference() {
         return "TXN-" + System.currentTimeMillis();
+    }
+
+
+    public DailyTransactionSummary getDailySummary(LocalDate date) {
+
+        LocalDateTime start = date.atStartOfDay();
+        LocalDateTime end = date.plusDays(1).atStartOfDay();
+
+        Object[] result = transactionRepository.getSummary(start, end);
+
+        // ✅ Null safety check
+        if (result == null) {
+            return new DailyTransactionSummary(0, BigDecimal.ZERO);
+        }
+
+
+        Object[] row;
+
+        if (result[0] instanceof Object[]) {
+            row = (Object[]) result[0];
+        } else {
+            row = result;
+        }
+
+
+        return new DailyTransactionSummary(
+
+                ((Number) row[0]).longValue(),
+                row[1] != null ? (BigDecimal) row[1] : BigDecimal.ZERO
+        );
+    }
+
+    public MonthlyTransactionSummary monthlyTransactionSummary(int year, int month) {
+        LocalDateTime start = LocalDateTime.of(year, month, 1, 0, 0, 0);
+        LocalDateTime end = start.plusMonths(1);
+
+        Object[] result = transactionRepository.getSummary(start, end);
+
+        if (result == null) {
+            return new MonthlyTransactionSummary(0, BigDecimal.ZERO);
+        }
+
+
+        Object[] row;
+
+        if (result[0] instanceof Object[]) {
+            row = (Object[]) result[0];
+        } else {
+            row = result;
+        }
+
+
+        return new MonthlyTransactionSummary(
+                ((Number) row[0]).longValue(),
+                row[1] != null ? (BigDecimal) row[1] : BigDecimal.ZERO
+        );
+    }
+
+    public TransactionStats getTransactionStats() {
+
+        List<Object[]> result = transactionRepository.getTransactionStats();
+
+        if (result.isEmpty()) {
+            return new TransactionStats(0,0,0);
+        }
+
+        Object[] row = result.getFirst();
+
+        return new TransactionStats(
+                ((Number) row[0]).longValue(),
+                ((Number) row[1]).longValue(),
+                ((Number) row[2]).longValue()
+        );
     }
 }

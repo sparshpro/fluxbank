@@ -5,8 +5,11 @@ import com.fluxbank.corebankingservice.transaction.service.TransactionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -45,6 +48,34 @@ public class TransactionController {
         return ResponseEntity.ok(
                 transactionService.getAccountTransactions(accountId)
         );
+    }
+
+    @GetMapping("/daily-summary")
+    @PreAuthorize("hasRole('SYSTEM')")
+    public DailyTransactionSummary dailySummary(@RequestParam LocalDate date) {
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+        System.out.println("Authorities: " + auth.getAuthorities());
+        return transactionService.getDailySummary(date);
+    }
+
+
+    @GetMapping("/monthly-summary")
+    @PreAuthorize("hasRole('SYSTEM')")
+    public MonthlyTransactionSummary getMonthlySummary(
+            @RequestParam("year") int year,
+            @RequestParam("month") int month
+    ){
+        return transactionService.monthlyTransactionSummary(year, month);
+    }
+
+
+
+    @GetMapping("/stats")
+    @PreAuthorize("hasRole('SYSTEM')")
+    TransactionStats getStats(){
+        return transactionService.getTransactionStats();
     }
 
 
