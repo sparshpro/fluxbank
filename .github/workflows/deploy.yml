@@ -34,9 +34,14 @@ jobs:
         cd ../core-banking-service
         mvn clean package -DskipTests
 
+        echo "Building Advanced Features Service..."
+        cd ../advanced-features-service
+        mvn clean package -DskipTests
+
         echo "Restarting services..."
         sudo systemctl restart api-gateway
         sudo systemctl restart core-banking-service
+        sudo systemctl restart advanced-banking-service
 
         echo "Deployment successful!"
 
