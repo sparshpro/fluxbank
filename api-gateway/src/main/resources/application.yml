@@ -16,6 +16,26 @@ spring:
     redis:
       host: localhost
       port: 6379
+  cloud:
+    gateway:
+          routes:
+            - id: core-banking-service
+              uri: http://localhost:8081
+              predicates:
+                - Path=/core-banking-service/**
+              filters:
+                - StripPrefix=1
+
+            - id: advanced-features-service
+              uri: http://localhost:8082
+              predicates:
+                - Path=/advanced-features-service/**
+              filters:
+                - StripPrefix=1
+
+
+
+
 
 
   # Rate limiter
@@ -47,6 +67,18 @@ management:
     health:
       show-details: always
       #Show full health details to everyone not just status
+
+
+
+
+springdoc:
+  swagger-ui:
+    urlsPrimaryName: core-banking-service
+    urls:
+      - name: core-banking-service
+        url: /core-banking-service/v3/api-docs
+      - name: advanced-features-service
+        url: /advanced-features-service/v3/api-docs
 
 
 
